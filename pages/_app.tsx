@@ -13,7 +13,7 @@ if (!process.env.NEXT_PUBLIC_PROJECT_ID) {
 
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 
-// 2. Configure wagmi client
+//t
 const chains: any = [bsc];
 const { provider } = configureChains(chains, [w3mProvider({ projectId })]);
 const wagmiClient = createClient({
