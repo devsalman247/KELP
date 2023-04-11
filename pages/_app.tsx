@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
 import { EthereumClient, w3mConnectors, w3mProvider } from "@web3modal/ethereum";
-import { WalletConnectLegacyConnector } from "wagmi/connectors/walletConnectLegacy";
+// import { WalletConnectLegacyConnector } from "wagmi/connectors/walletConnectLegacy";
+import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { Web3Modal } from "@web3modal/react";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
@@ -25,13 +26,10 @@ const wagmiClient = createClient({
 		new MetaMaskConnector({
 			chains,
 		}),
-		new WalletConnectLegacyConnector({
+		new WalletConnectConnector({
 			chains,
 			options: {
-				qrcode: true,
-				rpc: {
-					56: "https://bsc-dataseed.binance.org/",
-				},
+				projectId,
 			},
 		}),
 	],

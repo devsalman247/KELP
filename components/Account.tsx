@@ -111,7 +111,7 @@ export default function HomePage({ className }: DropDownToggleProps) {
 								className={`${disableSignup ? "disabled" : ""}`}
 								onClick={() => {
 									closeModal();
-									connect({ connector: connectors[1] });
+									connect({ connector: connectors[1], chainId: 56 });
 								}}>
 								<div className="walletLogo">
 									<Image className={`${disableSignup ? "disabled" : ""}`} src={walletconnect} alt="" />
