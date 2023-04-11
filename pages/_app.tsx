@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
 import { EthereumClient, w3mConnectors, w3mProvider } from "@web3modal/ethereum";
+import { WalletConnectLegacyConnector } from "wagmi/connectors/walletConnectLegacy";
+import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { Web3Modal } from "@web3modal/react";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
-import { bsc } from "wagmi/chains";
+import { mainnet, bsc } from "wagmi/chains";
+import { publicProvider } from "wagmi/providers/public";
 import "../styles/globals.css";
 
 // 1. Get projectID at https://cloud.walletconnect.com
@@ -14,16 +17,29 @@ if (!process.env.NEXT_PUBLIC_PROJECT_ID) {
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 
 //t
-const chains: any = [bsc];
-const { provider } = configureChains(chains, [w3mProvider({ projectId })]);
+// const chains: any = [bsc];
+const { provider, chains } = configureChains([mainnet, bsc], [publicProvider()]);
 const wagmiClient = createClient({
 	autoConnect: true,
-	connectors: w3mConnectors({ chains, projectId, version: 1 }) as any,
+	connectors: [
+		new MetaMaskConnector({
+			chains,
+		}),
+		new WalletConnectLegacyConnector({
+			chains,
+			options: {
+				qrcode: true,
+				rpc: {
+					56: "https://bsc-dataseed.binance.org/",
+				},
+			},
+		}),
+	],
 	provider,
 });
 
 // 3. Configure modal ethereum client
-const ethereumClient = new EthereumClient(wagmiClient, chains);
+// const ethereumClient = new EthereumClient(wagmiClient, chains);
 
 // 4. Wrap your app with WagmiProvider and add <Web3Modal /> compoennt
 export default function App({ Component, pageProps }: AppProps) {
@@ -41,7 +57,7 @@ export default function App({ Component, pageProps }: AppProps) {
 				</WagmiConfig>
 			) : null}
 
-			<Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+			{/* <Web3Modal projectId={projectId} ethereumClient={ethereumClient} /> */}
 		</>
 	);
 }
