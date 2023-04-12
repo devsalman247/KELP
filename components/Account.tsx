@@ -32,12 +32,12 @@ export default function HomePage({ className }: DropDownToggleProps) {
 						);
 					}
 
-					const activeElement: any = document.activeElement;
+					// const activeElement: any = document.activeElement;
 
-					// Check if the active element is a modal or popup
-					// if (activeElement.tagName === "IFRAME" && activeElement.getAttribute("role") === "dialog") {
-					// Close the modal or popup by calling its close() method
-					activeElement.style.display = "none";
+					// // Check if the active element is a modal or popup
+					// // if (activeElement.tagName === "IFRAME" && activeElement.getAttribute("role") === "dialog") {
+					// // Close the modal or popup by calling its close() method
+					// activeElement.style.display = "none";
 					// }
 				} catch (err: any) {
 					console.log("TrustWallet force redirect err", err);
