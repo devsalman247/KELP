@@ -20,6 +20,22 @@ export default function HomePage({ className }: DropDownToggleProps) {
 	const { open } = useWeb3Modal();
 	const { address, isConnected } = useAccount();
 	const { connect, connectors, error, pendingConnector } = useConnect({
+		onSuccess(data, variables, context) {
+			const deepLink = window.localStorage.getItem("WALLETCONNECT_DEEPLINK_CHOICE");
+			if (deepLink) {
+				try {
+					const _deepLink: { name: string; href: string } = JSON.parse(deepLink);
+					if (_deepLink.href === "https://link.trustwallet.com/wc") {
+						window.localStorage.setItem(
+							"WALLETCONNECT_DEEPLINK_CHOICE",
+							JSON.stringify({ name: "Trust Wallet", href: "trust://" })
+						);
+					}
+				} catch (err: any) {
+					console.log("TrustWallet force redirect err", err);
+				}
+			}
+		},
 		onError(error) {
 			console.log("Error", error);
 		},

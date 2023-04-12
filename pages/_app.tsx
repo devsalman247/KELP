@@ -4,7 +4,7 @@ import type { AppProps } from "next/app";
 import { WalletConnectLegacyConnector } from "wagmi/connectors/walletConnectLegacy";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-import { Web3Modal } from "@web3modal/react";
+// import { Web3Modal } from "@web3modal/react";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { mainnet, bsc } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
