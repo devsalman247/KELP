@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import { useWeb3Modal } from "@web3modal/react";
+import { useWeb3Modal } from "@web3modal/react";
 import { useAccount, useConnect, useEnsName } from "wagmi";
 import { disconnect } from "@wagmi/core";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -17,7 +17,7 @@ type DropDownToggleProps = {
 
 export default function HomePage({ className }: DropDownToggleProps) {
 	const [loading, setLoading] = useState(false);
-	// const { open } = useWeb3Modal();
+	const { open } = useWeb3Modal();
 	const { address, isConnected } = useAccount();
 	const { connect, connectors, error, pendingConnector } = useConnect({
 		onError(error) {
@@ -96,9 +96,10 @@ export default function HomePage({ className }: DropDownToggleProps) {
 						<div className="modal-body p-0">
 							<div
 								className={`${disableSignup ? "disabled" : ""}`}
-								onClick={() => {
+								onClick={async () => {
 									closeModal();
-									connect({ connector: connectors[0] });
+									// connect({ connector: connectors[0] });
+									await open();
 								}}>
 								<div className="walletLogo">
 									<Image className={`${disableSignup ? "disabled" : ""}`} src={metamask} alt="" />
@@ -109,9 +110,10 @@ export default function HomePage({ className }: DropDownToggleProps) {
 							<hr />
 							<div
 								className={`${disableSignup ? "disabled" : ""}`}
-								onClick={() => {
+								onClick={async () => {
 									closeModal();
-									connect({ connector: connectors[1], chainId: 56 });
+									// connect({ connector: connectors[1], chainId: 56 });
+									await open();
 								}}>
 								<div className="walletLogo">
 									<Image className={`${disableSignup ? "disabled" : ""}`} src={walletconnect} alt="" />
