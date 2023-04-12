@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
-import { EthereumClient, w3mConnectors, w3mProvider } from "@web3modal/ethereum";
+// import { EthereumClient, w3mConnectors, w3mProvider } from "@web3modal/ethereum";
 import { WalletConnectLegacyConnector } from "wagmi/connectors/walletConnectLegacy";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
@@ -19,7 +19,7 @@ export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 
 //t
 // const chains: any = [bsc];
-const { provider, chains } = configureChains([mainnet, bsc], [w3mProvider({ projectId })]);
+const { provider, chains } = configureChains([mainnet, bsc], [publicProvider()]);
 const wagmiClient = createClient({
 	autoConnect: true,
 	connectors:
@@ -33,17 +33,38 @@ const wagmiClient = createClient({
 		// 	},
 		// }),
 		[
-			...w3mConnectors({ version: 1, chains, projectId }),
-			new WalletConnectLegacyConnector({
-				chains,
+			// ...w3mConnectors({ version: 1, chains, projectId }),
+			// new WalletConnectLegacyConnector({
+			// 	chains,
+			// 	options: {
+			// 		qrcode: true,
+			// 	},
+			// }),
+			// new WalletConnectConnector({
+			// 	chains,
+			// 	options: {
+			// 		projectId,
+			// 	},
+			// }),
+
+			new MetaMaskConnector({
+				chains: chains,
 				options: {
-					qrcode: true,
+					shimDisconnect: true,
+					UNSTABLE_shimOnConnectSelectAccount: true,
 				},
 			}),
 			new WalletConnectConnector({
-				chains,
+				chains: chains,
 				options: {
-					projectId,
+					showQrModal: true,
+					projectId: projectId,
+				},
+			}),
+			new WalletConnectLegacyConnector({
+				chains: chains,
+				options: {
+					qrcode: true,
 				},
 			}),
 		],
@@ -52,7 +73,7 @@ const wagmiClient = createClient({
 });
 
 // 3. Configure modal ethereum client
-const ethereumClient = new EthereumClient(wagmiClient, chains);
+// const ethereumClient = new EthereumClient(wagmiClient, chains);
 
 // 4. Wrap your app with WagmiProvider and add <Web3Modal /> compoennt
 export default function App({ Component, pageProps }: AppProps) {
@@ -70,7 +91,7 @@ export default function App({ Component, pageProps }: AppProps) {
 				</WagmiConfig>
 			) : null}
 
-			<Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+			{/* <Web3Modal projectId={projectId} ethereumClient={ethereumClient} /> */}
 		</>
 	);
 }

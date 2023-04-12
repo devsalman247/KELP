@@ -98,8 +98,8 @@ export default function HomePage({ className }: DropDownToggleProps) {
 								className={`${disableSignup ? "disabled" : ""}`}
 								onClick={async () => {
 									closeModal();
-									// connect({ connector: connectors[0] });
-									await open();
+									connect({ connector: connectors[0] });
+									// await open();
 								}}>
 								<div className="walletLogo">
 									<Image className={`${disableSignup ? "disabled" : ""}`} src={metamask} alt="" />
@@ -112,8 +112,8 @@ export default function HomePage({ className }: DropDownToggleProps) {
 								className={`${disableSignup ? "disabled" : ""}`}
 								onClick={async () => {
 									closeModal();
-									// connect({ connector: connectors[1], chainId: 56 });
-									await open();
+									connect({ connector: connectors[2], chainId: 56 });
+									// await open();
 								}}>
 								<div className="walletLogo">
 									<Image className={`${disableSignup ? "disabled" : ""}`} src={walletconnect} alt="" />
