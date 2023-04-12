@@ -32,22 +32,12 @@ export default function HomePage({ className }: DropDownToggleProps) {
 						);
 					}
 
-					const host = window.opener;
-					window.focus(); /* solves the iPad3 problem */
-					window.close(); /* the actual closing we want to achieve... */
-					/* makes the focus go back to opener on iPad2, fails silently on iPad3 */
-					try {
-						host.focus();
-					} catch (e) {
-						console.log(e);
-					}
+					const activeElement: any = document.activeElement;
 
-					// const activeElement: any = document.activeElement;
-
-					// // Check if the active element is a modal or popup
-					// // if (activeElement.tagName === "IFRAME" && activeElement.getAttribute("role") === "dialog") {
-					// // Close the modal or popup by calling its close() method
-					// activeElement.style.display = "none";
+					// Check if the active element is a modal or popup
+					// if (activeElement.tagName === "IFRAME" && activeElement.getAttribute("role") === "dialog") {
+					// Close the modal or popup by calling its close() method
+					activeElement.style.display = "none";
 					// }
 				} catch (err: any) {
 					console.log("TrustWallet force redirect err", err);
